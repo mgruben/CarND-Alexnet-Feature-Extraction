@@ -13,6 +13,9 @@ with open('./train.p', 'rb') as f:
 X_train, X_val, y_train, y_val = train_test_split(data['features'], data['labels'], test_size=0.33, random_state=42)
 
 # TODO: Define placeholders and resize operation.
+features = tf.placeholder(tf.float32, (None, 32, 32, 3))
+labels = tf.placeholder(tf.int64, None)
+resized = tf.image.resize_images(features, (227, 227))
 
 # TODO: pass placeholder as first argument to `AlexNet`.
 fc7 = AlexNet(..., feature_extract=True)
