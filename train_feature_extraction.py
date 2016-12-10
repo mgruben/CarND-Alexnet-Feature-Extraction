@@ -10,6 +10,7 @@ with open('./train.p', 'rb') as f:
     data = pickle.load(f)
 
 # TODO: Split data into training and validation sets.
+X_train, X_val, y_train, y_val = train_test_split(data['features'], data['labels'], test_size=0.33, random_state=42)
 
 # TODO: Define placeholders and resize operation.
 
