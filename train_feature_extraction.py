@@ -55,6 +55,7 @@ Define a probability tensor to be the softmax of the logits
 '''
 probs = tf.nn.softmax(logits)
 
+
 # TODO: Define loss, training, accuracy operations.
 # HINT: Look back at your traffic signs project solution, you may
 # be able to reuse some the code.
@@ -75,3 +76,34 @@ init_op = tf.initialize_all_variables()
 
 
 # TODO: Train and evaluate the feature extraction model.
+def eval_on_data(X, y, sess):
+    total_acc = 0
+    total_loss = 0
+    for offset in range(0, X.shape[0], batch_size):
+        end = offset + batch_size
+        X_batch = X[offset:end]
+        y_batch = y[offset:end]
+
+        loss, acc = sess.run([loss_op, accuracy_op], feed_dict={features: X_batch, labels: y_batch})
+        total_loss += (loss * X_batch.shape[0])
+        total_acc += (acc * X_batch.shape[0])
+
+    return total_loss/X.shape[0], total_acc/X.shape[0]
+
+with tf.Session() as sess:
+    sess.run(init_op)
+
+    for i in range(epochs):
+        # training
+        X_train, y_train = shuffle(X_train, y_train)
+        t0 = time.time()
+        for offset in range(0, X_train.shape[0], batch_size):
+            end = offset + batch_size
+            sess.run(train_op, feed_dict={features: X_train[offset:end], labels: y_train[offset:end]})
+
+        val_loss, val_acc = eval_on_data(X_val, y_val, sess)
+        print("Epoch", i+1)
+        print("Time: %.3f seconds" % (time.time() - t0))
+        print("Validation Loss =", val_loss)
+        print("Validation Accuracy =", val_acc)
+        print("")
