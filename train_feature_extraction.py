@@ -18,7 +18,7 @@ labels = tf.placeholder(tf.int64, None)
 resized = tf.image.resize_images(features, (227, 227))
 
 # TODO: pass placeholder as first argument to `AlexNet`.
-fc7 = AlexNet(..., feature_extract=True)
+fc7 = AlexNet(resized, feature_extract=True)
 # NOTE: `tf.stop_gradient` prevents the gradient from flowing backwards
 # past this point, keeping the weights before and up to `fc7` frozen.
 # This also makes training faster, less work to do!
