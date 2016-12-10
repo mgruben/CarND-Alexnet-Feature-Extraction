@@ -6,6 +6,8 @@ from sklearn.utils import shuffle
 from alexnet import AlexNet
 
 # TODO: Load traffic signs data.
+with open('./train.p', 'rb') as f:
+    data = pickle.load(f)
 
 # TODO: Split data into training and validation sets.
 
