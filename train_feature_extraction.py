@@ -24,6 +24,11 @@ fc7 = AlexNet(resized, feature_extract=True)
 # This also makes training faster, less work to do!
 fc7 = tf.stop_gradient(fc7)
 
+# Parameters and descriptive variables
+nb_classes = 43
+epochs = 10
+batch_size = 128
+
 # TODO: Add the final layer for traffic sign classification.
 shape = (fc7.get_shape().as_list()[-1], nb_classes)  # use this shape for the weight matrix
 
