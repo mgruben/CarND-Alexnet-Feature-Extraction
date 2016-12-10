@@ -58,14 +58,20 @@ probs = tf.nn.softmax(logits)
 # TODO: Define loss, training, accuracy operations.
 # HINT: Look back at your traffic signs project solution, you may
 # be able to reuse some the code.
+'''Cost'''
 cross_entropy = tf.nn.sparse_softmax_cross_entropy_with_logits(logits, labels)
 loss_op = tf.reduce_mean(cross_entropy)
+
+'''Optimizer'''
 opt = tf.train.AdamOptimizer()
 train_op = opt.minimize(loss_op, var_list=[fc8W, fc8b])
-init_op = tf.initialize_all_variables()
 
+'''Accuracy'''
 preds = tf.arg_max(logits, 1)
 accuracy_op = tf.reduce_mean(tf.cast(tf.equal(preds, labels), tf.float32))
+
+'''Tensor initialization'''
+init_op = tf.initialize_all_variables()
 
 
 # TODO: Train and evaluate the feature extraction model.
