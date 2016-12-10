@@ -72,7 +72,7 @@ preds = tf.arg_max(logits, 1)
 accuracy_op = tf.reduce_mean(tf.cast(tf.equal(preds, labels), tf.float32))
 
 '''Tensor initialization'''
-init_op = tf.initialize_all_variables()
+init_op = tf.global_variables_initializer()
 
 
 # TODO: Train and evaluate the feature extraction model.
