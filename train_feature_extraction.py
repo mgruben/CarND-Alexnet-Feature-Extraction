@@ -25,6 +25,30 @@ fc7 = AlexNet(resized, feature_extract=True)
 fc7 = tf.stop_gradient(fc7)
 
 # TODO: Add the final layer for traffic sign classification.
+shape = (fc7.get_shape().as_list()[-1], nb_classes)  # use this shape for the weight matrix
+
+'''
+Create a weights tensor of shape `shape` initialized to
+a truncated normal distribution with a standard deviation
+of 0.001
+'''
+fc8W = tf.Variable(tf.truncated_normal(shape, stddev=1e-2))
+
+'''
+Create a biases tensor of length `nb_classes`,
+initialized to zeros
+'''
+fc8b = tf.Variable(tf.zeros(nb_classes))
+
+'''
+Define a logits tensor to be X*w + b
+'''
+logits = tf.nn.xw_plus_b(fc7, fc8W, fc8b)
+
+'''
+Define a probability tensor to be the softmax of the logits
+'''
+probs = tf.nn.softmax(logits)
 
 # TODO: Define loss, training, accuracy operations.
 # HINT: Look back at your traffic signs project solution, you may
